@@ -12,13 +12,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
-  PropType,
   computed,
   ref,
-  toRef,
   Ref,
 } from 'vue';
 import { Todo, Meta } from './models';
@@ -37,28 +34,19 @@ function useDisplayTodo(todos: Ref<Todo[]>) {
   const todoCount = computed(() => todos.value.length);
   return { todoCount };
 }
+const { clickCount, increment } = useClickCount();
 
-export default defineComponent({
-  name: 'ExampleComponent',
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    todos: {
-      type: Array as PropType<Todo[]>,
-      default: () => [],
-    },
-    meta: {
-      type: Object as PropType<Meta>,
-      required: true,
-    },
-    active: {
-      type: Boolean,
-    },
-  },
-  setup(props) {
-    return { ...useClickCount(), ...useDisplayTodo(toRef(props, 'todos')) };
-  },
+interface Props {
+  title: string;
+  todos: Todo[];
+  meta: Meta;
+  active?: boolean;
+}
+
+const defaults = withDefaults(defineProps<Props>(), {
+  todos: () => [],
 });
+const props = defaults;
+const { todoCount } = useDisplayTodo(ref(props.todos));
+
 </script>

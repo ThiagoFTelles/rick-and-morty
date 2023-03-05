@@ -4,6 +4,7 @@
     tag="a"
     target="_blank"
     :href="link"
+    to="/characters"
   >
     <q-item-section
       v-if="icon"
