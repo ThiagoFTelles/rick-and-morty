@@ -1,5 +1,13 @@
 <template>
   <q-page class="row items-center justify-evenly">
+    <span>
+      <h1>Characters</h1>
+      <ul>
+        <li v-for="character in characters" :key="character.id">
+          {{ character.name }}
+        </li>
+      </ul>
+    </span>
     <example-component
       title="Example component"
       active
@@ -12,7 +20,26 @@
 <script setup lang="ts">
 import { Todo, Meta } from 'components/models'
 import ExampleComponent from 'components/ExampleComponent.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useQuery } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
+
+const charactersQuery = gql`
+  query Characters {
+    characters {
+      results {
+        id
+        name
+        image
+      }
+    }
+  }
+`
+const characters: any = ref([])
+const { result } = useQuery(charactersQuery)
+watch(result, newValue => {
+  characters.value = newValue.characters.results
+})
 
 const todos = ref<Todo[]>([
   {

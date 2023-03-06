@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@vue/apollo-composable": "^4.0.0-beta.4",
+    "graphql": "^16.6.0",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
@@ -24,6 +26,8 @@
   "devDependencies": {
     "@intlify/vite-plugin-vue-i18n": "^3.3.1",
     "@quasar/app-vite": "^1.0.0",
+    "@quasar/quasar-app-extension-apollo": "^2.0.0-beta.5",
+    "@types/graphql": "^14.5.0",
     "@types/node": "^12.20.21",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
