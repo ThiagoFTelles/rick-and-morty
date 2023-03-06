@@ -66,6 +66,7 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/html-closing-bracket-spacing': 'off',
+    indent: ['error', 2],
     'eslint-disable-next-line': 'off',
     semi: ['error', 'never'],
     'max-len': 'off',
