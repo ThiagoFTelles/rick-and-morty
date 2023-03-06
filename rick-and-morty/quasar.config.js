@@ -65,7 +65,9 @@ module.exports = configure((/* ctx */) => ({
 
     // publicPath: '/',
     // analyze: true,
-    // env: {},
+    env: {
+      GRAPHQL_URI: 'https://rickandmortyapi.com/graphql',
+    },
     // rawDefine: {}
     // ignorePublicFolder: true,
     // minify: false,
