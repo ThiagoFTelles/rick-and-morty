@@ -4,9 +4,6 @@
       ref="tableRef"
       grid
       title="Personagens"
-      virtual-scroll
-      :virtual-scroll-item-size="50"
-      :virtual-scroll-emit-update="true"
       :rows="characters"
       :columns="columns"
       row-key="id"
