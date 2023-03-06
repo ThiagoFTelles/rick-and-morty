@@ -30,7 +30,7 @@ module.exports = configure((/* ctx */) => ({
   // app boot file (/src/boot)
   // --> boot files are part of "main.js"
   // https://v2.quasar.dev/quasar-cli-vite/boot-files
-  boot: ['i18n'],
+  boot: ['i18n', 'apollo'],
 
   // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
   css: ['app.scss'],
@@ -51,6 +51,20 @@ module.exports = configure((/* ctx */) => ({
 
   // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
   build: {
+    chainWebpack(chain, { isServer, isClient }) {
+      chain.module
+        .rule('vue')
+        .use('vue-loader')
+        .loader('vue-loader')
+        .tap(options => {
+          options.transpileOptions = {
+            transforms: {
+              dangerousTaggedTemplateString: true,
+            },
+          }
+          return options
+        })
+    },
     target: {
       browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
       node: 'node16',
