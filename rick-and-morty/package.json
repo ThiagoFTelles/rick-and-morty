@@ -6,6 +6,10 @@
   "author": "ThiagoFTelles <atendimento.telles@gmail.com>",
   "private": true,
   "scripts": {
+    "lint-fix": "eslint --fix \"src/**/*.@(js|vue|ts)\"",
+    "dev": "quasar dev",
+    "build": "quasar build",
+    "build:pwa": "quasar build -m pwa",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },
