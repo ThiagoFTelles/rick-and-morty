@@ -56,7 +56,7 @@ module.exports = configure((/* ctx */) => ({
       node: "node16",
     },
     afterBuild: "npm run lint-fix",
-    vueRouterMode: "hash", // available values: 'hash', 'history'
+    vueRouterMode: "history", // available values: 'hash', 'history'
     // vueRouterBase,
     // vueDevtools,
     // vueOptionsAPI: false,
