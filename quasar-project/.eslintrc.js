@@ -9,7 +9,9 @@ module.exports = {
   // `parser: 'vue-eslint-parser'` is already included with any 'plugin:vue/**' config and should be omitted
   parserOptions: {
     parser: require.resolve('@typescript-eslint/parser'),
-    extraFileExtensions: [ '.vue' ]
+    extraFileExtensions: [ '.vue' ],
+    ecmaVersion: 2020,
+    sourceType: 'module',
   },
 
   env: {
@@ -21,32 +23,14 @@ module.exports = {
 
   // Rules order is important, please avoid shuffling them
   extends: [
-    // Base ESLint recommended rules
-    // 'eslint:recommended',
-
-    // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#usage
-    // ESLint typescript rules
     'plugin:@typescript-eslint/recommended',
-
-    // Uncomment any of the lines below to choose desired strictness,
-    // but leave only one uncommented!
-    // See https://eslint.vuejs.org/rules/#available-rules
-    'plugin:vue/vue3-essential', // Priority A: Essential (Error Prevention)
-    // 'plugin:vue/vue3-strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
-    // 'plugin:vue/vue3-recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
-
-    'airbnb-base'
-    
+    'plugin:vue/vue3-essential',
+    '@vue/airbnb'
   ],
 
   plugins: [
-    // required to apply rules which need type information
     '@typescript-eslint',
-
-    // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-files
-    // required to lint *.vue files
     'vue'
-    
   ],
 
   globals: {
@@ -62,9 +46,24 @@ module.exports = {
     chrome: 'readonly'
   },
 
-  // add your custom rules here
   rules: {
-    
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'vue/html-closing-bracket-spacing': 'off',
+    'eslint-disable-next-line': 'off',
+    semi: ['error', 'never'],
+    'max-len': 'off',
+    'linebreak-style': 'off',
+    camelcase: ['error', { properties: 'never', ignoreDestructuring: true, ignoreImports: true }],
+    'arrow-parens': ['error', 'as-needed'],
+    'vue/multiline-html-element-content-newline': 'off',
+    'object-curly-newline': 'off',
+    'eol-last': 'off',
+    'no-trailing-spaces': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+
     'no-param-reassign': 'off',
     'no-void': 'off',
     'no-nested-ternary': 'off',
@@ -82,7 +81,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/prefer-default-export': 'off',
-    
+
     'prefer-promise-reject-errors': 'off',
 
     quotes: ['warn', 'single', { avoidEscape: true }],

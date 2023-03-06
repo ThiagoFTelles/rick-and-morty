@@ -2,7 +2,7 @@
   <div>
     <p>{{ title }}</p>
     <ul>
-      <li v-for="todo in todos" :key="todo.id" @click="increment">
+      <li v-for="todo in todos" :key="todo.id" @keydown.enter="increment" @click="increment">
         {{ todo.id }} - {{ todo.content }}
       </li>
     </ul>
@@ -17,24 +17,24 @@ import {
   computed,
   ref,
   Ref,
-} from 'vue';
-import { Todo, Meta } from './models';
+} from 'vue'
+import { Todo, Meta } from './models'
 
 function useClickCount() {
-  const clickCount = ref(0);
+  const clickCount = ref(0)
   function increment() {
-    clickCount.value += 1;
-    return clickCount.value;
+    clickCount.value += 1
+    return clickCount.value
   }
 
-  return { clickCount, increment };
+  return { clickCount, increment }
 }
 
 function useDisplayTodo(todos: Ref<Todo[]>) {
-  const todoCount = computed(() => todos.value.length);
-  return { todoCount };
+  const todoCount = computed(() => todos.value.length)
+  return { todoCount }
 }
-const { clickCount, increment } = useClickCount();
+const { clickCount, increment } = useClickCount()
 
 interface Props {
   title: string;
@@ -45,8 +45,8 @@ interface Props {
 
 const defaults = withDefaults(defineProps<Props>(), {
   todos: () => [],
-});
-const props = defaults;
-const { todoCount } = useDisplayTodo(ref(props.todos));
+})
+const props = defaults
+const { todoCount } = useDisplayTodo(ref(props.todos))
 
 </script>
