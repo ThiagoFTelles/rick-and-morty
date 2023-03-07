@@ -1,8 +1,7 @@
-export interface Todo {
-  id: number;
-  content: string;
-}
-
-export interface Meta {
-  totalCount: number;
+export interface ICharacter {
+  id: string
+  name: string
+  image: string
+  status: string
+  gender: string
 }
