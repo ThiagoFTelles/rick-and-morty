@@ -2,19 +2,6 @@
   <q-page class="flex-center row">
     <div class="q-pa-sm text-black text-center">
       <h2>Personagens da série Rick and Morty</h2>
-      <q-dialog v-model="loading">
-        <q-card class="text-center bg-black text-white">
-          <q-card-section>
-            <div class="text-h6">Carregando personagens...</div>
-            <q-circular-progress
-              indeterminate
-              size="50px"
-              color="lime"
-              class="q-ma-md"
-            />
-          </q-card-section>
-        </q-card>
-      </q-dialog>
       <q-dialog>
         <q-card class="text-center bg-black text-white">
           <q-card-section>
@@ -67,7 +54,7 @@ import { ICharacter } from '../components/models'
 const current = ref<number>(1)
 const charactersList = ref<ICharacter[]>([])
 
-const { result, loading, error, fetchMore } = useQuery(GET_ALL_CHARACTERS, {
+const { result, error, fetchMore } = useQuery(GET_ALL_CHARACTERS, {
   page: current,
 })
 
