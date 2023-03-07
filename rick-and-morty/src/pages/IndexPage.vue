@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex-center row">
-    <div class="q-pa-sm text-black text-center">
+    <div class="q-pa-sm text-center">
       <h2>Personagens da série Rick and Morty</h2>
       <q-dialog>
         <q-card class="text-center bg-black text-white">
@@ -20,7 +20,7 @@
       <q-infinite-scroll
         @load="fetchCharacters"
         :initial-index="1"
-        class="q-gutter-xl"
+        class="flex q-gutter-xl"
       >
         <q-item
           class="flex flex-center col-md-3 col-sm-4 col-12 q-my-md q-pa-md character"
@@ -31,7 +31,7 @@
           <CharacterCard :character="item" />
         </q-item>
         <template v-slot:loading>
-          <div class="row justify-center q-my-md">
+          <div class="row flex-center q-my-md">
             <q-spinner-dots color="primary" size="40px" />
           </div>
         </template>
@@ -43,7 +43,7 @@
       :offset="[18, 18]"
       :duration="800"
     >
-      <q-btn fab icon="keyboard_arrow_up" color="accent" />
+      <q-btn fab icon="keyboard_arrow_up" color="primary" />
     </q-page-scroller>
   </q-page>
 </template>
