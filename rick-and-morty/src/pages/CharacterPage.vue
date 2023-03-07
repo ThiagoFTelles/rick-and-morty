@@ -1,6 +1,7 @@
 <template>
   <q-page class="row items-center justify-evenly">
     <span v-if="character">
+      <img :alt="character.name" :src="character.image" />
       <p>name: {{ character.name }}</p>
       <p>status: {{ character.status }}</p>
       <p>species: {{ character.species }}</p>
