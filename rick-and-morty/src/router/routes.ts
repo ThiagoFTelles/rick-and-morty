@@ -26,6 +26,16 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/search/:name',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/SearchPage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it
