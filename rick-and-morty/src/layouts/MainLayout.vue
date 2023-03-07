@@ -24,10 +24,11 @@
         <q-input
           label="Pesquisar Personagem"
           dense
-          debounce="300"
+          debounce="500"
           v-model="name"
           placeholder="digite um nome"
           clearable
+          dark
         >
           <template v-slot:append>
             <q-icon name="search" />
