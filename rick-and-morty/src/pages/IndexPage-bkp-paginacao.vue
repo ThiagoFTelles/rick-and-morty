@@ -15,21 +15,35 @@
           </q-card-section>
         </q-card>
       </q-dialog>
-      <q-dialog>
+      <q-dialog v-if="error">
         <q-card class="text-center bg-black text-white">
           <q-card-section>
-            <div class="text-h6">Erro: {{ error?.message }}</div>
+            <div class="text-h6">Erro: {{ error.message }}</div>
           </q-card-section>
         </q-card>
       </q-dialog>
       <p v-if="result && result.characters" class="q-ma-none">
         {{ result.characters.info.count }} resultados
       </p>
+      <p v-if="result && result.characters" class="q-ma-none">
+        Pagina {{ current }}
+      </p>
     </div>
     <div
       class="q-pa-md row items-start justify-center"
-      :key="charactersList.length"
+      v-if="result?.characters"
     >
+      <div class="q-pa-sm flex flex-center col-12 bg-secondary">
+        <q-pagination
+          class="pagination"
+          v-model="current"
+          :max="result.characters.info.pages"
+          :max-pages="8"
+          boundary-numbers
+          direction-links
+          @click="setPage"
+        />
+      </div>
       <q-infinite-scroll @load="loadData" :initial-index="1">
         <q-item
           class="flex flex-center col-md-3 col-sm-4 col-12 q-my-md q-pa-md character"
@@ -39,11 +53,6 @@
         >
           <CharacterCard :character="item" />
         </q-item>
-        <template v-slot:loading>
-          <div class="row justify-center q-my-md">
-            <q-spinner-dots color="primary" size="40px" />
-          </div>
-        </template>
       </q-infinite-scroll>
     </div>
     <q-page-scroller
@@ -71,22 +80,32 @@ const { result, loading, error, fetchMore } = useQuery(GET_ALL_CHARACTERS, {
   page: current,
 })
 
-const loadData = async (index: any, done: any) => {
-  if (result.value.characters.info.next) {
-    current.value += 1
-    await fetchMore({
+const setPage = async () => {
+  if (fetchMore) {
+    fetchMore({
       variables: {
         page: current,
       },
     })?.then((e: { data: { characters: { results: number } } }) => {
       if (e.data.characters.results >= 1) {
         result.value = e.data
-        done()
       }
     })
-  } else {
-    done()
   }
+}
+
+const loadData = async (index: any, done: any) => {
+  current.value += 1
+  await fetchMore({
+    variables: {
+      page: current,
+    },
+  })?.then((e: { data: { characters: { results: number } } }) => {
+    if (e.data.characters.results >= 1) {
+      result.value = e.data
+    }
+  })
+  done()
 }
 
 watch(result, newValue => {
