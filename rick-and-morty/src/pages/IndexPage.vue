@@ -17,7 +17,11 @@
       class="q-pa-md row items-start justify-center"
       :key="charactersList.length"
     >
-      <q-infinite-scroll @load="loadData" :initial-index="1">
+      <q-infinite-scroll
+        @load="fetchCharacters"
+        :initial-index="1"
+        class="q-gutter-xl"
+      >
         <q-item
           class="flex flex-center col-md-3 col-sm-4 col-12 q-my-md q-pa-md character"
           v-for="(item, key) in charactersList"
@@ -58,7 +62,7 @@ const { result, error, fetchMore } = useQuery(GET_ALL_CHARACTERS, {
   page: current,
 })
 
-const loadData = async (index: any, done: any) => {
+const fetchCharacters = async (index: any, done: any) => {
   if (result.value.characters.info.next) {
     current.value += 1
     await fetchMore({
@@ -78,19 +82,7 @@ const loadData = async (index: any, done: any) => {
 
 watch(result, newValue => {
   if (newValue) {
-    newValue.characters.results.forEach(
-      (char: {
-        id: string
-        name: string
-        image: string
-        status: string
-        gender: string
-        species?: string | undefined
-        episode?: { id: string; name: string }[] | undefined
-      }) => {
-        charactersList.value.push(char)
-      },
-    )
+    charactersList.value.push(...newValue.characters.results)
   }
 })
 </script>
