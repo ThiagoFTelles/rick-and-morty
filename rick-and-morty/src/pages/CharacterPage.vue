@@ -1,10 +1,14 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <span>
-      <h1>Characters</h1>
+    <span v-if="character">
+      <p>name: {{ character.name }}</p>
+      <p>status: {{ character.status }}</p>
+      <p>species: {{ character.species }}</p>
+      <p>gender: {{ character.gender }}</p>
+      <h3>Episodes</h3>
       <ul>
-        <li v-for="character in characters" :key="character.id">
-          {{ character.name }}
+        <li v-for="episode in character.episode" :key="episode.id">
+          {{ episode.id }} - {{ episode.name }}
         </li>
       </ul>
     </span>
@@ -13,19 +17,18 @@
 
 <script setup lang="ts" context="module">
 import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useQuery } from '@vue/apollo-composable'
 import { ICharacter } from '../components/models'
-import { GET_ALL_CHARACTERS } from '../apollo/queries'
+import { GET_CHARACTER_BY_ID } from '../apollo/queries'
 
-const characters = ref<ICharacter[]>([])
+const route = useRoute()
+const { id } = route.params
 
-const page = ref<number>(1)
-const { result } = useQuery(GET_ALL_CHARACTERS, { page })
+const character = ref<ICharacter>()
+
+const { result } = useQuery(GET_CHARACTER_BY_ID, { id })
 watch(result, newValue => {
-  characters.value = newValue.characters.results
+  character.value = newValue.character
 })
-
-// const meta = ref<Meta>({
-//   totalCount: 1200,
-// })
 </script>

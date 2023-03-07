@@ -20,11 +20,10 @@
           </q-avatar>
           Mr. Poopybutt Files
         </q-toolbar-title>
-        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer v-model="leftDrawerOpen" bordered>
       <q-list>
         <q-item-label header> Links </q-item-label>
 
@@ -35,10 +34,6 @@
           v-bind="link"
         />
       </q-list>
-    </q-drawer>
-
-    <q-drawer v-model="rightDrawerOpen" side="right" overlay bordered>
-      <!-- drawer content -->
     </q-drawer>
     <q-page-container>
       <router-view />
@@ -60,11 +55,12 @@
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import { ILink } from '../components/models'
 
-const linksList = [
+const linksList: ILink[] = [
   {
     title: 'Characters',
     caption: 'lista de personagens',
@@ -84,29 +80,10 @@ const linksList = [
     link: '#',
   },
 ]
+const leftDrawerOpen = ref<boolean>(false)
 
-export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink,
-  },
-
-  setup() {
-    const leftDrawerOpen = ref(false)
-    const rightDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
-      rightDrawerOpen,
-      toggleRightDrawer() {
-        rightDrawerOpen.value = !rightDrawerOpen.value
-      },
-    }
-  },
-})
+const essentialLinks = linksList
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
 </script>

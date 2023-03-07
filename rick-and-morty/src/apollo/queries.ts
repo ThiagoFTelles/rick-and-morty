@@ -55,50 +55,17 @@ export const GET_CHARACTERS_BY_NAME = gql`
 `
 
 export const GET_CHARACTER_BY_ID = gql`
-  query GetCharacterById($id: Int!) {
+  query GetCharacterById($id: ID!) {
     character(id: $id) {
       id
       name
       status
       species
-      type
       gender
-      origin {
-        id
-        name
-        type
-        dimension
-        residents {
-          id
-          name
-          status
-          species
-          type
-          gender
-          image
-        }
-      }
-      location {
-        id
-        name
-        type
-        dimension
-        residents {
-          id
-          name
-          status
-          species
-          type
-          gender
-          image
-        }
-      }
       image
       episode {
         id
         name
-        air_date
-        episode
       }
     }
   }
