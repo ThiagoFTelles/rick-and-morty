@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ICharacter } from './models'
+import { ICharacter } from '../models'
 
 defineProps<{
   character: ICharacter
