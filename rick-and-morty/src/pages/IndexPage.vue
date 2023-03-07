@@ -1,20 +1,5 @@
 <template>
   <q-page class="flex-center row">
-    <q-input
-      label="Pesquisar Personagem"
-      dense
-      debounce="300"
-      v-model="name"
-      placeholder="digite um nome"
-      :rules="[
-        val => val.length >= 3 || 'Escreva pelo menos 3 letras para buscar.',
-      ]"
-      clearable
-    >
-      <template v-slot:append>
-        <q-icon name="search" />
-      </template>
-    </q-input>
     <div class="q-pa-sm text-black text-center">
       <h2>Personagens da série Rick and Morty</h2>
       <q-dialog v-model="loading">
@@ -91,9 +76,8 @@
 </template>
 
 <script setup lang="ts" context="module">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
-import { useRouter } from 'vue-router'
 import { GET_ALL_CHARACTERS } from '../apollo/queries'
 import CharacterCard from '../components/Characters/CharacterCard.vue'
 
@@ -117,21 +101,4 @@ const setPage = async (val: any) => {
     })
   }
 }
-
-const name = ref<string>('')
-
-const router = useRouter()
-
-watch(name, newValue => {
-  if (newValue) {
-    console.log(newValue)
-    router.push({ path: `/search/${newValue}` })
-  }
-})
-
-// const page = ref<number>(1)
-// const { result } = useQuery(GET_ALL_CHARACTERS, { page })
-// watch(result, newValue => {
-//   characters.value = newValue.characters.results
-// })
 </script>

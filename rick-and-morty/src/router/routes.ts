@@ -14,6 +14,10 @@ const routes: RouteRecordRaw[] = [
         path: '',
         component: () => import('pages/CharactersPage.vue'),
       },
+      {
+        path: ':name',
+        component: () => import('pages/SearchPage.vue'),
+      },
     ],
   },
   {
@@ -23,16 +27,6 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         component: () => import('pages/CharacterPage.vue'),
-      },
-    ],
-  },
-  {
-    path: '/search/:name',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/SearchPage.vue'),
       },
     ],
   },

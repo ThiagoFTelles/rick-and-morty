@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex-center row">
     <div class="q-pa-sm text-black text-center">
-      <h2>Personagens da série Rick and Morty</h2>
+      <h2>Resultado para a pesquisa por "{{ searchName }}"</h2>
       <q-dialog v-model="loading">
         <q-card class="text-center bg-black text-white">
           <q-card-section>
@@ -41,7 +41,7 @@
           :max-pages="8"
           boundary-numbers
           direction-links
-          @click="setPage(current)"
+          @click="setPage"
         />
       </div>
       <q-item
@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts" context="module">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
 import { useRoute } from 'vue-router'
 import { GET_CHARACTERS_BY_NAME } from '../apollo/queries'
@@ -86,11 +86,15 @@ const current = ref<number>(1)
 
 const route = useRoute()
 const { name } = route.params
+const searchName = ref(name)
 
-const { result, loading, error, fetchMore } = useQuery(GET_CHARACTERS_BY_NAME, {
-  page: current,
-  name,
-})
+const { result, loading, error, fetchMore, refetch } = useQuery(
+  GET_CHARACTERS_BY_NAME,
+  {
+    page: current.value,
+    name: searchName.value,
+  },
+)
 
 const setPage = async (val: any) => {
   if (fetchMore) {
@@ -107,10 +111,14 @@ const setPage = async (val: any) => {
   }
 }
 
-// watch(name, newValue => {
-//   if (newValue) {
-//     console.log(newValue)
-//     router.push({ path: '/search', params: { name: newValue } })
-//   }
-// })
+watch(
+  () => route.params.name,
+  newVal => {
+    searchName.value = newVal
+    refetch({
+      page: current.value,
+      name: newVal,
+    })
+  },
+)
 </script>

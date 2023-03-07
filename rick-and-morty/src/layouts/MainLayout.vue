@@ -20,6 +20,19 @@
           </q-avatar>
           Mr. Poopybutt Files
         </q-toolbar-title>
+        <q-space />
+        <q-input
+          label="Pesquisar Personagem"
+          dense
+          debounce="300"
+          v-model="name"
+          placeholder="digite um nome"
+          clearable
+        >
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
       </q-toolbar>
     </q-header>
 
@@ -56,8 +69,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import { useRouter } from 'vue-router'
 import { ILink } from '../components/models'
 
 const linksList: ILink[] = [
@@ -86,4 +100,14 @@ const essentialLinks = linksList
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
+const name = ref<string>('')
+
+const router = useRouter()
+
+watch(name, newValue => {
+  if (newValue) {
+    router.push({ path: `/characters/${newValue}` })
+  }
+})
 </script>
