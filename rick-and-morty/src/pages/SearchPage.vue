@@ -97,6 +97,8 @@ const { result, loading, error, fetchMore, refetch } = useQuery(
 )
 
 const setPage = async (val: any) => {
+  console.log(val)
+
   if (fetchMore) {
     fetchMore({
       variables: {
@@ -115,6 +117,7 @@ watch(
   () => route.params.name,
   newVal => {
     searchName.value = newVal
+    current.value = 1
     refetch({
       page: current.value,
       name: newVal,

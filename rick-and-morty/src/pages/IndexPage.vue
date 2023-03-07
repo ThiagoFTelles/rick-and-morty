@@ -41,28 +41,19 @@
           :max-pages="8"
           boundary-numbers
           direction-links
-          @click="setPage(current)"
-        />
-      </div>
-      <q-item
-        class="flex flex-center col-md-3 col-sm-4 col-12 q-my-md q-pa-md character"
-        v-for="(item, key) in result.characters.results"
-        :key="key"
-        :to="`/character/${item.id}`"
-      >
-        <CharacterCard :character="item" />
-      </q-item>
-      <div class="q-pa-sm flex flex-center col-12 bg-secondary">
-        <q-pagination
-          class="pagination primary"
-          v-model="current"
-          :max="result.characters.info.pages"
-          :max-pages="8"
-          boundary-numbers
-          direction-links
           @click="setPage"
         />
       </div>
+      <q-infinite-scroll @load="loadData" :initial-index="1">
+        <q-item
+          class="flex flex-center col-md-3 col-sm-4 col-12 q-my-md q-pa-md character"
+          v-for="(item, key) in charactersList"
+          :key="key"
+          :to="`/character/${item.id}`"
+        >
+          <CharacterCard :character="item" />
+        </q-item>
+      </q-infinite-scroll>
     </div>
     <q-page-scroller
       position="bottom-right"
@@ -76,29 +67,62 @@
 </template>
 
 <script setup lang="ts" context="module">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
 import { GET_ALL_CHARACTERS } from '../apollo/queries'
 import CharacterCard from '../components/Characters/CharacterCard.vue'
+import { ICharacter } from '../components/models'
 
 const current = ref<number>(1)
+const charactersList = ref<ICharacter[]>([])
 
 const { result, loading, error, fetchMore } = useQuery(GET_ALL_CHARACTERS, {
   page: current,
 })
 
-const setPage = async (val: any) => {
+const setPage = async () => {
   if (fetchMore) {
     fetchMore({
       variables: {
-        page: val,
+        page: current,
       },
     })?.then((e: { data: { characters: { results: number } } }) => {
       if (e.data.characters.results >= 1) {
-        console.log(e.data)
         result.value = e.data
       }
     })
   }
 }
+
+const loadData = async (index: any, done: any) => {
+  current.value += 1
+  await fetchMore({
+    variables: {
+      page: current,
+    },
+  })?.then((e: { data: { characters: { results: number } } }) => {
+    if (e.data.characters.results >= 1) {
+      result.value = e.data
+    }
+  })
+  done()
+}
+
+watch(result, newValue => {
+  if (newValue) {
+    newValue.characters.results.forEach(
+      (char: {
+        id: string
+        name: string
+        image: string
+        status: string
+        gender: string
+        species?: string | undefined
+        episode?: { id: string; name: string }[] | undefined
+      }) => {
+        charactersList.value.push(char)
+      },
+    )
+  }
+})
 </script>
