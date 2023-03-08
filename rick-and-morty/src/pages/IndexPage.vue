@@ -8,9 +8,6 @@
           </q-card-section>
         </q-card>
       </q-dialog>
-      <p v-if="result && result.characters" class="q-ma-none">
-        {{ result.characters.info.count }} resultados
-      </p>
     </div>
     <div
       class="q-pa-md row items-start justify-center"
@@ -19,7 +16,7 @@
       <q-infinite-scroll
         @load="fetchCharacters"
         :initial-index="1"
-        class="flex q-gutter-xl"
+        class="flex q-gutter-xl infinite-scroll"
       >
         <q-item
           class="flex flex-center col-md-3 col-sm-4 col-12 q-my-md q-pa-md character"
@@ -85,3 +82,9 @@ watch(result, newValue => {
   }
 })
 </script>
+
+<style lang="scss">
+.infinite-scroll {
+  place-content: center;
+}
+</style>
