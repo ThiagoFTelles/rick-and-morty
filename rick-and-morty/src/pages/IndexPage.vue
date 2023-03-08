@@ -81,5 +81,8 @@ watch(result, newValue => {
 <style lang="scss">
 .infinite-scroll {
   place-content: center;
+  .invisible {
+    display: none;
+  }
 }
 </style>
