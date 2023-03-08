@@ -39,11 +39,9 @@
     </q-toolbar>
   </q-header>
 
-  <q-drawer v-model="leftDrawerOpen" bordered>
+  <q-drawer v-model="leftDrawerOpen" bordered class="bg-primary text-white">
     <q-list>
-      <q-item-label header> Links </q-item-label>
-
-      <q-item tag="a" to="/characters">Characters Link</q-item>
+      <q-item-label class="text-white" header> Links </q-item-label>
       <EssentialLink
         v-for="link in essentialLinks"
         :key="link.title"
@@ -61,22 +59,16 @@ import { ILink } from '../../components/models'
 
 const linksList: ILink[] = [
   {
-    title: 'Characters',
-    caption: 'lista de personagens',
-    icon: 'public',
-    link: '/characters',
+    title: 'Linkedin',
+    caption: '@thiagoftelles',
+    icon: 'link',
+    link: 'https://www.linkedin.com/in/thiagoftelles/',
   },
   {
     title: 'Github',
-    caption: 'github.com/ThiagoFTelles/',
+    caption: '@ThiagoFTelles',
     icon: 'code',
-    link: 'https://github.com/ThiagoFTelles/',
-  },
-  {
-    title: 'With love by',
-    caption: 'Thiago F Telles',
-    icon: 'favorite',
-    link: '#',
+    link: 'https://github.com/ThiagoFTelles/rick-and-morty',
   },
 ]
 const essentialLinks = linksList
