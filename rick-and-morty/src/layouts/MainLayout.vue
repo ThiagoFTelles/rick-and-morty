@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh LpR fff">
     <HeaderPage />
-    <q-page-container class="bg-accent">
+    <q-page-container class="bg-secondary">
       <router-view />
     </q-page-container>
   </q-layout>

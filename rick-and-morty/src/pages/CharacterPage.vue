@@ -1,14 +1,18 @@
 <template>
-  <q-page class="row items-center justify-evenly">
+  <q-page class="row items-center justify-evenly text-white">
     <span v-if="character">
+      <h2 class="text-weight-bolder text-center">{{ character.name }}</h2>
       <img :alt="character.name" :src="character.image" />
-      <p>name: {{ character.name }}</p>
-      <p>status: {{ character.status }}</p>
-      <p>species: {{ character.species }}</p>
-      <p>gender: {{ character.gender }}</p>
-      <h3>Episodes</h3>
+      <div><b>Status: </b> {{ character.status }}</div>
+      <div><b>Spécie: </b> {{ character.species }}</div>
+      <div><b>Gênero: </b> {{ character.gender }}</div>
+      <h3 class="q-my-md text-center"><b>Episódios</b></h3>
       <ul>
-        <li v-for="episode in character.episode" :key="episode.id">
+        <li
+          v-for="episode in character.episode"
+          :key="episode.id"
+          class="text-weight-bold"
+        >
           {{ episode.id }} - {{ episode.name }}
         </li>
       </ul>
@@ -33,3 +37,44 @@ watch(result, newValue => {
   character.value = newValue.character
 })
 </script>
+
+<style lang="scss" scoped>
+img {
+  border-radius: 10px;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  max-width: 700px;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+ul::before {
+  content: '';
+  width: 0.5rem;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 8%;
+  background: peachpuff;
+  z-index: -1;
+}
+
+li {
+  padding: 0.5rem 1.5rem 1rem;
+  border-radius: 1.5rem;
+  background: peachpuff;
+  color: tomato;
+}
+
+li + li {
+  margin-top: 1rem;
+}
+
+::marker {
+  font-weight: 600;
+  color: tomato;
+  font-size: 1.5rem;
+}
+</style>
