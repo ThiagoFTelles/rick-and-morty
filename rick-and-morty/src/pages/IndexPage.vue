@@ -1,7 +1,6 @@
 <template>
   <q-page class="flex-center row">
     <div class="q-pa-sm text-center">
-      <h2>Personagens da série Rick and Morty</h2>
       <q-dialog>
         <q-card class="text-center bg-black text-white">
           <q-card-section>
