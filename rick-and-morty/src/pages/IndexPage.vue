@@ -26,11 +26,6 @@
         >
           <CharacterCard :character="item" />
         </q-item>
-        <template v-slot:loading>
-          <div class="row flex-center q-my-md">
-            <q-spinner-dots color="primary" size="40px" />
-          </div>
-        </template>
       </q-infinite-scroll>
     </div>
     <q-page-scroller
