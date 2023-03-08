@@ -1,8 +1,19 @@
-export interface Todo {
-  id: number;
-  content: string;
+export interface ILink {
+  title: string
+  caption: string
+  icon: string
+  link: string
 }
-
-export interface Meta {
-  totalCount: number;
+interface IEpisode {
+  id: string
+  name: string
+}
+export interface ICharacter {
+  id: string
+  name: string
+  image: string
+  status: string
+  gender: string
+  species?: string
+  episode?: IEpisode[]
 }
